@@ -5,19 +5,26 @@ const https = require('https');
 
 const app = express();
 const port = 3000;
-
-app.use(cors({
-    origin: process.env.FRONTEND_URL || '*',
+const corsOptions = {
+    origin: ['https://jukebox-wza8.onrender.com', 'http://localhost:3000'],
     methods: ['POST', 'GET', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Content-Disposition'],
-    exposedHeaders: ['Content-Disposition']
-  }));
+    exposedHeaders: ['Content-Disposition'],
+    credentials: true,
+    optionsSuccessStatus: 200
+  };
+
+app.use(cors(corsOptions));
 app.use(express.json());
+app.options('*', cors(corsOptions));
 app.get('/', (req, res) => {
     res.json({ status: 'backend is running' });
   });
 
 app.post('/download/audio', async (req, res) => {
+  res.header('Access-Control-Allow-Origin', 'https://jukebox-wza8.onrender.com');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Content-Disposition');
+  res.header('Access-Control-Expose-Headers', 'Content-Disposition');
   const url = req.body.message;
   if (ytdl.validateURL(url)) {
     try {
@@ -42,6 +49,9 @@ app.post('/download/audio', async (req, res) => {
 });
 
 app.post('/download/thumbnail', async (req, res) => {
+  res.header('Access-Control-Allow-Origin', 'https://jukebox-wza8.onrender.com');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Content-Disposition');
+  res.header('Access-Control-Expose-Headers', 'Content-Disposition');
   const url = req.body.message;
   if (ytdl.validateURL(url)) {
     try {
@@ -65,5 +75,5 @@ app.post('/download/thumbnail', async (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log(`Server is running on http://localhost:${port}`);
+  console.log(`Server is running on port ${port}`);
 });
