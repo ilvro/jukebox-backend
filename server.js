@@ -173,7 +173,7 @@ const cookies = [
         "value": "f7=4100&f6=40000000&tz=America.Sao_Paulo&f5=30000"
     }
 ]
-const env = 'http://127.0.0.1:5500';
+const env = 'https://jukebox-wza8.onrender.com';
 // 'https://jukebox-wza8.onrender.com'
 
 const app = express();
