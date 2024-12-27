@@ -2,6 +2,7 @@ const express = require('express');
 const ytdl = require("@distube/ytdl-core");
 const cors = require('cors');
 const https = require('https');
+const COOKIE = 'CONSENT=YES+1';
 
 const app = express();
 const port = 3000;
@@ -28,7 +29,14 @@ app.post('/download/audio', async (req, res) => {
   const url = req.body.message;
   if (ytdl.validateURL(url)) {
     try {
-      const videoInfo = await ytdl.getInfo(url);
+        const videoInfo = await ytdl.getInfo(url, {
+            requestOptions: {
+              headers: {
+                cookie: COOKIE,
+                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+              }
+            }
+          });
       const videoTitle = videoInfo.videoDetails.title.replace('—', '-');
 
       res.header('content-type', 'application/json')
@@ -55,7 +63,14 @@ app.post('/download/thumbnail', async (req, res) => {
   const url = req.body.message;
   if (ytdl.validateURL(url)) {
     try {
-      const videoInfo = await ytdl.getInfo(url);
+      const videoInfo = await ytdl.getInfo(url, {
+            requestOptions: {
+              headers: {
+                cookie: COOKIE,
+                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+              }
+            }
+          });
       const videoThumbnail = videoInfo.videoDetails.thumbnails.slice(-1)[0].url;
 
       // pipe the thumbnail to the response
