@@ -173,13 +173,23 @@ const cookies = [
         "value": "f7=4100&f6=40000000&tz=America.Sao_Paulo&f5=30000"
     }
 ]
-const env = 'https://jukebox-wza8.onrender.com';
-// 'https://jukebox-wza8.onrender.com'
-
 const app = express();
 const port = 3000;
+const allowedOrigins = [
+    'https://jukebox-wza8.onrender.com',
+    'https://jukebox-backend-16sx.onrender.com',
+    'http://localhost:5500'
+  ];
+  
 const corsOptions = {
-    origin: [env],
+    origin: function (origin, callback) {
+      // Check if origin is in allowedOrigins
+      if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
     methods: ['POST', 'GET', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Content-Disposition'],
     exposedHeaders: ['Content-Disposition'],
@@ -189,7 +199,7 @@ const corsOptions = {
 const agent = ytdl.createAgent(cookies);
 app.use(cors(corsOptions));
 app.use(express.json());
-app.options('*', cors(corsOptions));
+app.options(cors(corsOptions));
 app.get('/', (req, res) => {
     res.json({ status: 'backend is running' });
   });
