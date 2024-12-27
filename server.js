@@ -18,7 +18,7 @@ const cookies = [
         name: 'YSC', value: 'uMhUNR-xNMw',
     }
 ]
-const env = 'http://127.0.0.1:5500';
+const env = 'https://jukebox-wza8.onrender.com';
 // 'https://jukebox-wza8.onrender.com'
 
 const app = express();
