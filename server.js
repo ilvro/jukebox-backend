@@ -19,7 +19,7 @@ const cookies = [
     },
     {
         "domain": ".youtube.com",
-        "expirationDate": 1750878713.831911,
+        "expirationDate": 1750879915.623754,
         "hostOnly": false,
         "httpOnly": true,
         "name": "__Secure-1PSIDTS",
@@ -28,7 +28,20 @@ const cookies = [
         "secure": true,
         "session": false,
         "storeId": null,
-        "value": "sidts-CjEB7wV3sQ3wNixVi8ggfDM8Ev-p5Df_DSPQkKhh04BoygUJfTrwEs07j6as9kW2aj6VEAA"
+        "value": "sidts-CjEB7wV3sUAzqM2RtwjzZ3L7UdlS2OItrGmwJ4xIsMI_82wHnYvwJAdfqEK54MysOjbDEAA"
+    },
+    {
+        "domain": ".youtube.com",
+        "expirationDate": 1735328720,
+        "hostOnly": false,
+        "httpOnly": false,
+        "name": "CONSISTENCY",
+        "path": "/",
+        "sameSite": null,
+        "secure": true,
+        "session": false,
+        "storeId": null,
+        "value": "AKreu9v0gyPK2FXK6KzkRuEQZ-1B4cFvCOYvLDHKBpxTFS11AnEspBJ4tNEWGKGqnLKWs_aOzNGU8LVZZpwuvdSmHDIyjNAs5aejhkrlp3QDAz92jfvQNsE"
     },
     {
         "domain": ".youtube.com",
@@ -45,7 +58,7 @@ const cookies = [
     },
     {
         "domain": ".youtube.com",
-        "expirationDate": 1750879181.604954,
+        "expirationDate": 1750880120.499566,
         "hostOnly": false,
         "httpOnly": true,
         "name": "__Secure-1PSIDCC",
@@ -54,7 +67,7 @@ const cookies = [
         "secure": true,
         "session": false,
         "storeId": null,
-        "value": "AKEyXzVUlJSvsuA1EuPgK5EHSomexvUtvMuOC2EkKrmGqHmSuk-5JuA5lh_GX8Me0zxHajsu3YU"
+        "value": "AKEyXzVDrxzRCWfOdymV7Ps8blTtgH8yjoEE-HdJJjBjddZBO4ocWNHlgru9rLDN3dCbxHpzV_Q"
     },
     {
         "domain": ".youtube.com",
@@ -122,7 +135,7 @@ const cookies = [
     },
     {
         "domain": ".youtube.com",
-        "expirationDate": 1750879181.605099,
+        "expirationDate": 1750880120.499732,
         "hostOnly": false,
         "httpOnly": true,
         "name": "__Secure-3PSIDCC",
@@ -131,11 +144,11 @@ const cookies = [
         "secure": true,
         "session": false,
         "storeId": null,
-        "value": "AKEyXzUi_TUESwZIPtU6CVPp--HEN8BkIoCJ9_W2krA_pfe9ofSsfAx_fclRCiDJ8i9TMYPNqAc"
+        "value": "AKEyXzVyAzaA9iwbhqQyIhAQdhb4sEPyvtO9A0PXm3Os79DgsUeouWOyb1Bgcwazv0ouVjm7jjo"
     },
     {
         "domain": ".youtube.com",
-        "expirationDate": 1750878713.832172,
+        "expirationDate": 1750879915.623995,
         "hostOnly": false,
         "httpOnly": true,
         "name": "__Secure-3PSIDTS",
@@ -144,7 +157,7 @@ const cookies = [
         "secure": true,
         "session": false,
         "storeId": null,
-        "value": "sidts-CjEB7wV3sQ3wNixVi8ggfDM8Ev-p5Df_DSPQkKhh04BoygUJfTrwEs07j6as9kW2aj6VEAA"
+        "value": "sidts-CjEB7wV3sUAzqM2RtwjzZ3L7UdlS2OItrGmwJ4xIsMI_82wHnYvwJAdfqEK54MysOjbDEAA"
     },
     {
         "domain": ".youtube.com",
@@ -161,7 +174,7 @@ const cookies = [
     },
     {
         "domain": ".youtube.com",
-        "expirationDate": 1735931978.42793,
+        "expirationDate": 1735932636.572069,
         "hostOnly": false,
         "httpOnly": false,
         "name": "PREF",
@@ -199,7 +212,6 @@ const corsOptions = {
 const agent = ytdl.createAgent(cookies);
 app.use(cors(corsOptions));
 app.use(express.json());
-app.options(cors(corsOptions));
 app.get('/', (req, res) => {
     res.json({ status: 'backend is running' });
   });
