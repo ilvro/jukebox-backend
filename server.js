@@ -18,6 +18,7 @@ const cookies = [
         name: 'YSC', value: 'uMhUNR-xNMw',
     }
 ]
+const COOKIE = 'APISID=f8l6T6h7uJUm32xe/AU4sCfJlo1BLUlZwY; GPS=1; HSID=Ai4e9SWryawPISD5O; LOGIN_INFO=AFmmF2swRAIgfugKN4-qFoYbvIZRzgasxDjs0ZIhhnTK-vC-Xpi5-hECIFGUjNecjWfroXpbXaD_udcJLRjMMsJkqP4Uelmj44E0:QUQ3MjNmeHJacFhBaXdSRThEMFlSSV9nXy1wdVZPSU4tSXNHOGZ2SFFwRzlfR20xdGpPLVZHUUd6SGZMT0NDRWEzTE1ITjdaeElocGhVMHg1bUVCbXVQZFJaSjVLdmlaQjQ3MGJZb0JZWWtRRHdXX2EzOFFvTUNibTBzbi05OWRMQzZZVVFnU2toSUp5ZFdULXhuamtWVHVnNjZ3Yms2Nnd3; PREF=f6=40000000&tz=America.Sao_Paulo&f7=100; SAPISID=CUCtaknP1xB-LYqw/AtK74RUi_vIgrZC3r; SID=g.a000rwgXDeLlCKOHRRkCDY23sRXs-TipLyQdTtNEEfqW-cudbs4dQ_GaqfoRBEbg7b2GkQFgyQACgYKAeASARMSFQHGX2Mi-E4XjPD-WGWXOudVnM3uYBoVAUF8yKrXCGiTAhtko4MAMwZedSm90076; SIDCC=AKEyXzXjbMOyfj5uT-OeGAPe9lQn6RU0IixABc8loDSFdFJnI351UZadYRYr7r-lrDyUUrEW; SSID=ARK5IWG5m5M0yLmHy; VISITOR_INFO1_LIVE=or5dxEj6saw; VISITOR_PRIVACY_METADATA=CgJCUhIEGgAgMg%3D%3D; YSC=uMhUNR-xNMw';
 const env = 'https://jukebox-wza8.onrender.com';
 // 'https://jukebox-wza8.onrender.com'
 
@@ -46,7 +47,14 @@ app.post('/download/audio', async (req, res) => {
   const url = req.body.message;
   if (ytdl.validateURL(url)) {
     try {
-        const videoInfo = await ytdl.getInfo(url, agent);
+        const videoInfo = await ytdl.getInfo(url, {
+            requestOptions: {
+              headers: {
+                cookie: COOKIE,
+                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+              }
+            }
+          });
       const videoTitle = videoInfo.videoDetails.title.replace('—', '-');
 
       res.header('content-type', 'application/json')
@@ -73,7 +81,14 @@ app.post('/download/thumbnail', async (req, res) => {
   const url = req.body.message;
   if (ytdl.validateURL(url)) {
     try {
-      const videoInfo = await ytdl.getInfo(url, agent);
+        const videoInfo = await ytdl.getInfo(url, {
+            requestOptions: {
+              headers: {
+                cookie: COOKIE,
+                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+              }
+            }
+          });
       const videoThumbnail = videoInfo.videoDetails.thumbnails.slice(-1)[0].url;
 
       // pipe the thumbnail to the response
