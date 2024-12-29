@@ -29,7 +29,6 @@ const allowedOrigins = [
   
 const corsOptions = {
     origin: function (origin, callback) {
-      // Check if origin is in allowedOrigins
       if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
         callback(null, true);
       } else {
@@ -50,7 +49,6 @@ app.get('/', (req, res) => {
   });
 
 app.post('/download/audio', async (req, res) => {
-  res.header('Access-Control-Allow-Origin', env);
   res.header('Access-Control-Allow-Headers', 'Content-Type, Content-Disposition');
   res.header('Access-Control-Expose-Headers', 'Content-Disposition');
   const url = req.body.message;
