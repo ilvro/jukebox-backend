@@ -176,7 +176,7 @@ const cookiesO = [
 
     {
         "name": "CONSENT",
-
+        "value": "YES+1"
     }
 ]
 
