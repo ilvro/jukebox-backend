@@ -3,6 +3,13 @@ const ytdl = require("@distube/ytdl-core");
 const cors = require('cors');
 const https = require('https');
 
+const app = express();
+const port = 3000;
+const allowedOrigins = [
+    'https://jukebox-wza8.onrender.com',
+    'https://jukebox-backend-16sx.onrender.com',
+    'http://127.0.0.1:5500'
+  ];
 const cookiesO = [
     {
         "domain": ".youtube.com",
@@ -180,25 +187,27 @@ const cookiesO = [
     }
 ]
 
-const cookies = cookiesO.map(cookie => ({
-    name: cookie.name,
-    value: cookie.value
-}))
+const cookies = cookiesO.map(cookie => `${cookie.name}=${cookie.value}`).join("; ");
 
-const app = express();
-const port = 3000;
-const allowedOrigins = [
-    'https://jukebox-wza8.onrender.com',
-    'https://jukebox-backend-16sx.onrender.com',
-    'http://localhost:5500'
-  ];
+const options = {
+    //agent: ytdl.createProxyAgent({ uri: "http://168.194.248.18:8080" }),
+    pipelining: 5,
+    requestOptions: {
+      headers: {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
+        "Cookie": cookies,
+      },
+    },
+  };
+
+const agent = ytdl.createAgent(cookiesO, options);
   
 const corsOptions = {
     origin: function (origin, callback) {
       if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
         callback(null, true);
       } else {
-        callback(new Error('Not allowed by CORS'));
+        callback(new Error('unrecognized origin, not allowed by CORS'));
       }
     },
     methods: ['POST', 'GET', 'OPTIONS'],
@@ -207,16 +216,6 @@ const corsOptions = {
     credentials: true,
     optionsSuccessStatus: 200
   };
-
-const agentOptions = {
-    keepAlive: true,
-    keepAliveMsecs: 1000,
-    maxSockets: 25,
-    maxFreeSockets: 10
-};
-
-
-const agent = ytdl.createAgent(cookies, agentOptions);
 app.use(cors(corsOptions));
 app.use(express.json());
 app.get('/', (req, res) => {
@@ -229,7 +228,7 @@ app.post('/download/audio', async (req, res) => {
   const url = req.body.message;
   if (ytdl.validateURL(url)) {
     try {
-        const videoInfo = await ytdl.getInfo(url, agent);
+      const videoInfo = await ytdl.getInfo(url, agent);
       const videoTitle = videoInfo.videoDetails.title.replace('—', '-');
 
       res.header('content-type', 'application/json')
